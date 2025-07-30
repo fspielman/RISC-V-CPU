@@ -9,9 +9,6 @@ entity instruction_decode_register is
     pc: in std_logic_vector(31 downto 0);
     imm_ext: in std_logic_vector(31 downto 0);
     pc_plus4: in std_logic_vector(31 downto 0);
-		source1: in std_logic_vector(4 downto 0);
-		source2: in std_logic_vector(4 downto 0);
-		dest: in std_logic_vector(4 downto 0);
 
     branch: in std_logic;
     jump: in std_logic;
@@ -27,9 +24,6 @@ entity instruction_decode_register is
     pc_ex: out std_logic_vector(31 downto 0);
     imm_ext_ex: out std_logic_vector(31 downto 0);
     pc_plus4_ex: out std_logic_vector(31 downto 0);
-		source1_ex: out std_logic_vector(4 downto 0);
-		source2_ex: out std_logic_vector(4 downto 0);
-		dest_ex: out std_logic_vector(4 downto 0);
     
     branch_ex: out std_logic;
     jump_ex: out std_logic;
@@ -52,9 +46,6 @@ begin
       pc_ex <= pc;
       imm_ext_ex <= imm_ext;
       pc_plus4_ex <= pc_plus4;
-			source1_ex <= source1;
-			source2_ex <= source2;
-			dest_ex <= dest;
 
 			branch_ex <= branch;
 			jump_ex <= jump;

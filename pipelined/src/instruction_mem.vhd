@@ -18,42 +18,23 @@ architecture instr_mem_arch of instruction_mem is
 		-- addi x0, x0, 0
 		0 => x"00000013", -- nop
 
-		-- or x4, x5, x6 
-		1 => x"0062E233", -- 3 or 4 => 011 or 100 = 111 -> x4=7
-
-		-- add x18,x19,x20 
-		2 => x"01498933", -- 7+8=15 -> x18=15
-
-		-- sub x5, x6, x7 
-		3 => x"407302B3", -- 4-5=-1 -> x5=-1
-
-		-- jal (instruction 8) jumps back here
-		-- addi x4 x5 23 
-		4 => x"01728213", -- -1+23 -> x4=22 , 13+23 -> x4 = 36 after jump 
-
-		-- andi x0, x0, 0 
-		5 => x"00007013", -- 0 and 0 -> x0=0
-
-		-- lw   x5, 0(x7)
-		6 => x"0003A283",  -- x7=5, loads from byte address 5 -> ram[1]=0 index: 5/4=1 -> x5=13
-
-		-- sw   x4, 4(x7) 
-		7 => x"0043a223", -- x7=5, x4 stores in ram[2] index: (5+4)/4 = 2
-
-		-- beq x7, x4, 4 
-		8 => x"00438263", -- x7 != x4 (x7-x4 != 0) -> no branch
-
-		-- jal  x1, -20 
-		9 => x"fedff0ef", -- x1=40 & jumps back 5 instructions
-
-		-- beq x8, x9, -12 
-		-- 9 => x"fe940ae3", -- x8=x9=0 (0-0=0) -> jumps back 3 instructions
+		-- add x4, x5, x6
+		1 => x"00628233", -- x4 = 3 + 4 = 7
 		
-		-- or x4, x5, x6 
-		10 => x"0062E233", -- 3 or 4 => 011 or 100 = 111 -> x4=7
+		-- add x7, x4, x8 -- x7 = 7 + 10 = 17
+		2 => x"008203b3",
 		
-		-- add x18,x19,x20 
-		11 => x"01498933", -- 7+8=15 -> x18=15
+		-- add x3, x4, x5
+		3 => x"005201b3", -- x3 = 7 + 3 = 10
+		
+		-- add x16, x17, x18
+		4 => x"01288833", -- x16 = 12 + 6 = 18
+		
+		-- add x15, x19, x16
+		5 => x"010987b3", -- x15 = 7 + 18 = 25
+		
+		-- add x21, x20, x16
+		6 => x"010a0ab3", -- x21 = 8 + 18 = 26
 		
 		others => (others => '0')
 	);

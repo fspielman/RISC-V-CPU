@@ -110,16 +110,16 @@ package components is
 		);
   end component;
 
-	component mux3to1  is
-		port(
-			sel: in std_logic_vector(1 downto 0);
-			d0: in std_logic_vector(31 downto 0);
-			d1: in std_logic_vector(31 downto 0);
-			d2: in std_logic_vector(31 downto 0);
+  component write_back_mux is
+    port(
+			result_src: in std_logic_vector(1 downto 0); -- select
+			alu_result: in std_logic_vector(31 downto 0);
+			read_data_mem: in std_logic_vector(31 downto 0);
+			pc_plus4: in std_logic_vector(31 downto 0);
 
-			y: out std_logic_vector(31 downto 0)
+			write_back: out std_logic_vector(31 downto 0)
 		);
-	end component mux3to1;
+  end component;
 
   component cpu is
     port(
@@ -146,9 +146,6 @@ package components is
 			pc: in std_logic_vector(31 downto 0);
 			imm_ext: in std_logic_vector(31 downto 0);
 			pc_plus4: in std_logic_vector(31 downto 0);
-			source1: in std_logic_vector(4 downto 0);
-			source2: in std_logic_vector(4 downto 0);
-			dest: in std_logic_vector(4 downto 0);
 
 			branch: in std_logic;
 			jump: in std_logic;
@@ -164,9 +161,6 @@ package components is
 			pc_ex: out std_logic_vector(31 downto 0);
 			imm_ext_ex: out std_logic_vector(31 downto 0);
 			pc_plus4_ex: out std_logic_vector(31 downto 0);
-			source1_ex: out std_logic_vector(4 downto 0);
-			source2_ex: out std_logic_vector(4 downto 0);
-			dest_ex: out std_logic_vector(4 downto 0);
 			
 			branch_ex: out std_logic;
 			jump_ex: out std_logic;
@@ -184,7 +178,6 @@ package components is
 			alu_result: in std_logic_vector(31 downto 0);
 			write_data: in std_logic_vector(31 downto 0);
 			pc_plus4: in std_logic_vector(31 downto 0);
-			dest_ex: in std_logic_vector(4 downto 0);
 		 
 			result_src_ex: in std_logic_vector(1 downto 0);
 			mem_write_ex: in std_logic;
@@ -193,14 +186,12 @@ package components is
 			alu_result_mem: out std_logic_vector(31 downto 0);
 			write_data_mem: out std_logic_vector(31 downto 0);
 			pc_plus4_mem: out std_logic_vector(31 downto 0);
-			dest_mem: out std_logic_vector(4 downto 0);
 		 
 			result_src_mem: out std_logic_vector(1 downto 0);
 			mem_write_mem: out std_logic;
 			reg_write_mem: out std_logic
 		);
 	end component execute_register;
-
 	
 	component write_back_register is
 		port(
@@ -208,7 +199,6 @@ package components is
 			alu_result: in std_logic_vector(31 downto 0);
 			read_data_mem: in std_logic_vector(31 downto 0);
 			pc_plus4: in std_logic_vector(31 downto 0);
-			dest_mem: in std_logic_vector(4 downto 0);
 		 
 			result_src_mem: in std_logic_vector(1 downto 0);
 			mem_write_mem: in std_logic;
@@ -217,25 +207,12 @@ package components is
 			alu_result_wb: out std_logic_vector(31 downto 0);
 			read_data_mem_wb: out std_logic_vector(31 downto 0);
 			pc_plus4_wb: out std_logic_vector(31 downto 0);
-			dest_wb: out std_logic_vector(4 downto 0);
 		 
 			result_src_wb: out std_logic_vector(1 downto 0);
 			reg_write_wb: out std_logic
 		);
 	end component write_back_register;
 	
-	component hazard_unit is
-		port (
-			read_source1: in std_logic_vector(4 downto 0);
-			read_source2: in std_logic_vector(4 downto 0);
-			reg_write_wb: in std_logic;
-			dest_mem: in std_logic_vector(4 downto 0);
-			dest_wb: in std_logic_vector(4 downto 0);
-			
-			forward_1: out std_logic_vector(1 downto 0);
-			forward_2: out std_logic_vector(1 downto 0)
-		);
-	end component hazard_unit;
 
 end package;
 

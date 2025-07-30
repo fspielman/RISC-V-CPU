@@ -24,8 +24,6 @@ architecture reg_file_arch of register_file is
 		5 => std_logic_vector(to_unsigned(3, 32)),  -- x5 = 3
 		6 => std_logic_vector(to_unsigned(4, 32)),  -- x6 = 4
 		7 => std_logic_vector(to_unsigned(5, 32)),  -- x7 = 5
-		8 => std_logic_vector(to_unsigned(10, 32)),  -- x8 = 10
-		17 => std_logic_vector(to_unsigned(12, 32)), -- x17 = 12
 		18 => std_logic_vector(to_unsigned(6, 32)),  -- x18 = 6
 		19 => std_logic_vector(to_unsigned(7, 32)),  -- x19 = 7
 		20 => std_logic_vector(to_unsigned(8, 32)),  -- x20 = 8
