@@ -5,7 +5,6 @@ use ieee.numeric_std.all;
 entity program_counter is
   port(
 		clk: in std_logic;
-		stall: in std_logic;
 		pc_src: in std_logic;
 		pc_target: in std_logic_vector(31 downto 0); 
 		pc_plus4: in std_logic_vector(31 downto 0); 
@@ -22,14 +21,12 @@ begin
   process(clk)
   begin
     if rising_edge(clk) then
-			if stall = '0' then
-				if pc_src = '1' then
-					pc_reg <= pc_target;
-				else
-					pc_reg <= pc_plus4;
-				end if;
-			end if;
-		end if;
+      if pc_src = '1' then
+        pc_reg <= pc_target;
+      else
+        pc_reg <= pc_plus4;
+      end if;
+    end if;
   end process;
 
   pc <= pc_reg;

@@ -24,7 +24,9 @@ begin
       case alu_op is
         -- lw / sw
         when "00" =>
+          -- if(funct3 = "010") then
           alu_ctrl <= "0000"; -- add base + immediate offset
+          -- end if;
 
         -- R-type operations
         when "10" => 

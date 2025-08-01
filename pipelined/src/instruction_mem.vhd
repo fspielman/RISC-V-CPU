@@ -15,26 +15,30 @@ architecture instr_mem_arch of instruction_mem is
   type memory is array(0 to 31) of std_logic_vector(31 downto 0);
 
   signal rom : memory := (
+		
 		-- addi x0, x0, 0
 		0 => x"00000013", -- nop
 
+		-- lw x5, 0(x7)
+		1 => x"0003A283",  -- x7=5, loads from byte address 5 -> ram[1]=13 index: 5/4=1 -> x5=13
+
 		-- add x4, x5, x6
-		1 => x"00628233", -- x4 = 3 + 4 = 7
+		2 => x"00628233", -- x4 = 13 + 4 = 17
 		
-		-- add x7, x4, x8 -- x7 = 7 + 10 = 17
-		2 => x"008203b3",
+		-- add x7, x4, x8 -- x7 = 17 + 10 = 27
+		3 => x"008203b3",
 		
 		-- add x3, x4, x5
-		3 => x"005201b3", -- x3 = 7 + 3 = 10
+		4 => x"005201b3", -- x3 = 17 + 13 = 30
 		
 		-- add x16, x17, x18
-		4 => x"01288833", -- x16 = 12 + 6 = 18
+		5 => x"01288833", -- x16 = 12 + 6 = 18
 		
 		-- add x15, x19, x16
-		5 => x"010987b3", -- x15 = 7 + 18 = 25
+		6 => x"010987b3", -- x15 = 7 + 18 = 25
 		
 		-- add x21, x20, x16
-		6 => x"010a0ab3", -- x21 = 8 + 18 = 26
+		7 => x"010a0ab3", -- x21 = 8 + 18 = 26
 		
 		others => (others => '0')
 	);

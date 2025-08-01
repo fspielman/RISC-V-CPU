@@ -35,9 +35,7 @@ architecture cpu_arch of cpu is
 
   signal imm_ext: std_logic_vector(31 downto 0);
   signal sel_sourceB: std_logic_vector(31 downto 0);
-	signal alu_sourceA: std_logic_vector(31 downto 0);
-	signal alu_sourceB: std_logic_vector(31 downto 0);
-	
+
   signal read_data_mem: std_logic_vector(31 downto 0);
   signal write_back: std_logic_vector(31 downto 0);
 
@@ -56,9 +54,6 @@ architecture cpu_arch of cpu is
   signal pc_ex: std_logic_vector(31 downto 0);
   signal imm_ext_ex: std_logic_vector(31 downto 0);
   signal pc_plus4_ex: std_logic_vector(31 downto 0);
-	signal source1_ex: std_logic_vector(4 downto 0);
-	signal source2_ex: std_logic_vector(4 downto 0);
-	signal dest_ex: std_logic_vector(4 downto 0);
   signal branch_ex: std_logic;
   signal jump_ex: std_logic;
   signal result_src_ex: std_logic_vector(1 downto 0);
@@ -71,7 +66,6 @@ architecture cpu_arch of cpu is
   signal alu_result_mem: std_logic_vector(31 downto 0);
   signal write_data_mem: std_logic_vector(31 downto 0);
   signal pc_plus4_mem: std_logic_vector(31 downto 0);
-	signal dest_mem: std_logic_vector(4 downto 0);
 	signal result_src_mem: std_logic_vector(1 downto 0);
   signal mem_write_mem: std_logic;
   signal reg_write_mem: std_logic;
@@ -79,16 +73,8 @@ architecture cpu_arch of cpu is
 	signal alu_result_wb: std_logic_vector(31 downto 0);
   signal read_data_mem_wb: std_logic_vector(31 downto 0);
   signal pc_plus4_wb: std_logic_vector(31 downto 0);	 
-	signal dest_wb: std_logic_vector(4 downto 0);
 	signal result_src_wb: std_logic_vector(1 downto 0);
 	signal reg_write_wb: std_logic;
-	
-	-- hazard unit
-	signal forward_1: std_logic_vector(1 downto 0);
-	signal forward_2: std_logic_vector(1 downto 0);
-	signal stall_if: std_logic;
-	signal flush_id: std_logic;
-	signal stall_pc: std_logic;
 		
 begin
 
@@ -99,7 +85,6 @@ begin
 	
 	if_reg: instruction_fetch_register port map(
 		clk,
-		stall_if,
 		instruction,
 		pc_plus4,
 		instruction_id,
@@ -115,7 +100,7 @@ begin
 		reg_write_wb,
 		source1, 
 		source2, 
-		dest_wb,	
+		dest,	
 		write_back,
 		read_data1,
 		read_data2
@@ -147,15 +132,11 @@ begin
 	
 	id_register: instruction_decode_register port map(
 		clk,
-		flush_id,
     read_data1,
     read_data2,
     pc,
     imm_ext,
     pc_plus4_id,
-		source1,
-		source2,
-		dest,
     branch,
     jump,
     result_src,
@@ -169,9 +150,6 @@ begin
     pc_ex,
     imm_ext_ex,
     pc_plus4_ex,
-		source1_ex,
-		source2_ex,
-		dest_ex,
     branch_ex,
     jump_ex,
     result_src_ex,
@@ -181,10 +159,10 @@ begin
     reg_write_ex
 	);
 	
-	sel_sourceB <= alu_sourceB when alu_src_ex = '0' else imm_ext_ex;
+	sel_sourceB <= read_data2_ex when alu_src_ex = '0' else imm_ext_ex;
 	
 	arithmetic_logic_unit: alu port map(
-		alu_sourceA,
+		read_data1_ex,
 		sel_sourceB,
 		alu_ctrl_ex,
 		alu_result_ex,
@@ -196,14 +174,12 @@ begin
     alu_result_ex,
     read_data2_ex,
     pc_plus4_ex,
-		dest_ex,
     result_src_ex,
     mem_write_ex,
     reg_write_ex,
     alu_result_mem,
     write_data_mem,
     pc_plus4_mem,
-		dest_mem,
 		result_src_mem,
     mem_write_mem,
     reg_write_mem
@@ -222,19 +198,17 @@ begin
     alu_result_mem,
     read_data_mem,
     pc_plus4_mem,
-		dest_mem,
 		result_src_mem,
     mem_write_mem,
     reg_write_mem,
     alu_result_wb,
     read_data_mem_wb,
     pc_plus4_wb,
-		dest_wb,
 		result_src_wb,
 		reg_write_wb
   );
 	
-	write_back_mux: mux3to1  port map(
+	mux: write_back_mux  port map(
 		result_src_wb,
 		alu_result_wb,
 		read_data_mem_wb,
@@ -250,46 +224,10 @@ begin
 
 	pc_handler: program_counter port map(
 		clk, 
-		stall_pc,
 		pc_src,
 		pc_target,
 		pc_plus4,
 		pc
-	);
-	
-	haz_unit: hazard_unit port map(
-		source1,
-		source2,
-		source1_ex,
-		source2_ex,
-		dest_ex,
-		result_src_ex,
-		reg_write_mem,
-		reg_write_wb,
-		dest_mem,
-		dest_wb,
-			
-		forward_1,
-		forward_2,
-		stall_if,
-		flush_id,
-		stall_pc
-	);
-	
-	hazard_source1_mux: mux3to1 port map(
-		forward_1,
-		read_data1_ex,
-		alu_result_mem,
-		write_back,
-		alu_sourceA
-	);
-	
-	hazard_source2_mux: mux3to1 port map(
-		forward_2,
-		read_data2_ex,
-		alu_result_mem,
-		write_back,
-		alu_sourceB
 	);
 
 end architecture cpu_arch;
