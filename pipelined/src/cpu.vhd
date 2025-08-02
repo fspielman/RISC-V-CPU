@@ -87,6 +87,7 @@ architecture cpu_arch of cpu is
 	signal forward_1: std_logic_vector(1 downto 0);
 	signal forward_2: std_logic_vector(1 downto 0);
 	signal stall_if: std_logic;
+	signal flush_if: std_logic;
 	signal flush_id: std_logic;
 	signal stall_pc: std_logic;
 		
@@ -100,6 +101,7 @@ begin
 	if_reg: instruction_fetch_register port map(
 		clk,
 		stall_if,
+		flush_if,
 		instruction,
 		pc_plus4,
 		instruction_id,
@@ -264,6 +266,7 @@ begin
 		source2_ex,
 		dest_ex,
 		result_src_ex,
+		pc_src,
 		reg_write_mem,
 		reg_write_wb,
 		dest_mem,
@@ -272,6 +275,7 @@ begin
 		forward_1,
 		forward_2,
 		stall_if,
+		flush_if,
 		flush_id,
 		stall_pc
 	);

@@ -132,6 +132,7 @@ package components is
 		port(
 			clk: in std_logic;
 			stall: in std_logic;
+			flush: in std_logic;
 			instruction: in std_logic_vector(31 downto 0);
 			pc_plus4: in std_logic_vector(31 downto 0);
 
@@ -235,6 +236,7 @@ package components is
 			source2_ex: in std_logic_vector(4 downto 0);
 			dest_ex: in std_logic_vector(4 downto 0);
 			result_src_ex: in std_logic_vector(1 downto 0);
+			pc_src_ex: in std_logic;
 			reg_write_mem: in std_logic;
 			reg_write_wb: in std_logic;
 			dest_mem: in std_logic_vector(4 downto 0);
@@ -243,6 +245,7 @@ package components is
 			forward_1: out std_logic_vector(1 downto 0);
 			forward_2: out std_logic_vector(1 downto 0);
 			stall_if: out std_logic;
+			flush_if: out std_logic;
 			flush_id: out std_logic;
 			stall_pc: out std_logic
 		);

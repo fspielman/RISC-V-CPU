@@ -28,6 +28,8 @@ architecture reg_file_arch of register_file is
 		18 => std_logic_vector(to_unsigned(6, 32)),  -- x18 = 6
 		19 => std_logic_vector(to_unsigned(7, 32)),  -- x19 = 7
 		20 => std_logic_vector(to_unsigned(8, 32)),  -- x20 = 8
+		30 => std_logic_vector(to_unsigned(15, 32)),  -- x30 = 15
+		31 => std_logic_vector(to_unsigned(15, 32)),  -- x31 = 15	
 		others => (others => '0')
 	);
 

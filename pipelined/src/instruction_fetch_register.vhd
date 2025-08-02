@@ -6,6 +6,7 @@ entity instruction_fetch_register is
   port(
     clk: in std_logic;
 		stall: in std_logic;
+		flush: in std_logic;
     instruction: in std_logic_vector(31 downto 0);
     pc_plus4: in std_logic_vector(31 downto 0);
 
@@ -20,7 +21,10 @@ begin
   process(clk)
   begin
     if rising_edge(clk) then
-			if stall = '0' then
+			if flush = '1' then
+				instruction_id <= (others => '0');
+				pc_plus4_id <= (others => '0');
+			elsif stall = '0' then
 				instruction_id <= instruction;
 				pc_plus4_id <= pc_plus4;
 			end if;

@@ -40,6 +40,15 @@ architecture instr_mem_arch of instruction_mem is
 		-- add x21, x20, x16
 		7 => x"010a0ab3", -- x21 = 8 + 18 = 26
 		
+		-- beq x30, x31, -32
+		8 => x"ffff00e3", -- x30 = x31 = 15 -> branch taken (jumps back 7 instructions) -> control hazard
+		
+		-- add x15, x19, x16
+		9 => x"010987b3",	-- control hazard -> gets flushed
+		
+		-- add x21, x20, x16
+		10 => x"010a0ab3", -- control hazard -> gets flushed 
+		
 		others => (others => '0')
 	);
 
