@@ -4,15 +4,15 @@ use ieee.std_logic_1164.all;
 entity instruction_decode_register is
   port(
     clk: in std_logic;
-		flush: in std_logic;
+	 flush: in std_logic;
     read_data1: in std_logic_vector(31 downto 0);
     read_data2: in std_logic_vector(31 downto 0);
     pc: in std_logic_vector(31 downto 0);
     imm_ext: in std_logic_vector(31 downto 0);
     pc_plus4: in std_logic_vector(31 downto 0);
-		source1: in std_logic_vector(4 downto 0);
-		source2: in std_logic_vector(4 downto 0);
-		dest: in std_logic_vector(4 downto 0);
+	 source1: in std_logic_vector(4 downto 0);
+	 source2: in std_logic_vector(4 downto 0);
+	 dest: in std_logic_vector(4 downto 0);
 
     branch: in std_logic;
     jump: in std_logic;
@@ -28,9 +28,9 @@ entity instruction_decode_register is
     pc_ex: out std_logic_vector(31 downto 0);
     imm_ext_ex: out std_logic_vector(31 downto 0);
     pc_plus4_ex: out std_logic_vector(31 downto 0);
-		source1_ex: out std_logic_vector(4 downto 0);
-		source2_ex: out std_logic_vector(4 downto 0);
-		dest_ex: out std_logic_vector(4 downto 0);
+	 source1_ex: out std_logic_vector(4 downto 0);
+	 source2_ex: out std_logic_vector(4 downto 0);
+	 dest_ex: out std_logic_vector(4 downto 0);
     
     branch_ex: out std_logic;
     jump_ex: out std_logic;

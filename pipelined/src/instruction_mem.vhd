@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 entity instruction_mem is
   port(
-		address: in std_logic_vector(31 downto 0);
+	 address: in std_logic_vector(31 downto 0);
 
     instruction: out std_logic_vector(31 downto 0)
 	);
