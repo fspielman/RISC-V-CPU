@@ -5,22 +5,22 @@ entity hazard_unit is
   port (
    source1_id: in std_logic_vector(4 downto 0);
    source2_id: in std_logic_vector(4 downto 0);
-	 source1_ex: in std_logic_vector(4 downto 0);
+   source1_ex: in std_logic_vector(4 downto 0);
    source2_ex: in std_logic_vector(4 downto 0);
-	 dest_ex: in std_logic_vector(4 downto 0);
-	 result_src_ex: in std_logic_vector(1 downto 0);
-	 pc_src_ex: in std_logic;
-	 reg_write_mem: in std_logic;
+   dest_ex: in std_logic_vector(4 downto 0);
+   result_src_ex: in std_logic_vector(1 downto 0);
+   pc_src_ex: in std_logic;
+   reg_write_mem: in std_logic;
    reg_write_wb: in std_logic;
    dest_mem: in std_logic_vector(4 downto 0);
    dest_wb: in std_logic_vector(4 downto 0);
     
    forward_1: out std_logic_vector(1 downto 0);
    forward_2: out std_logic_vector(1 downto 0);
-	 stall_if_id: out std_logic;
-	 flush_if_id: out std_logic;
-	 flush_id_ex: out std_logic;
-	 stall_pc: out std_logic
+   stall_if_id: out std_logic;
+   flush_if_id: out std_logic;
+   flush_id_ex: out std_logic;
+   stall_pc: out std_logic
   );
 end entity hazard_unit;
 

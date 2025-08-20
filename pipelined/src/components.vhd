@@ -244,10 +244,10 @@ package components is
 
            forward_1: out std_logic_vector(1 downto 0);
            forward_2: out std_logic_vector(1 downto 0);
-					 stall_if_id: out std_logic;
-					 flush_if_id: out std_logic;
-					 flush_id_ex: out std_logic;
-					 stall_pc: out std_logic
+		   stall_if_id: out std_logic;
+		   flush_if_id: out std_logic;
+		   flush_id_ex: out std_logic;
+		   stall_pc: out std_logic
          );
   end component hazard_unit;
 
