@@ -1,6 +1,7 @@
 # Pipelined RISC-V RV32I CPU
 
 **5-Stage Pipeline** of the RISC-V RV32I CPU with hazard control
+
 Extension to the **[`Single-Cycle CPU`](../single_cycle/)**
 
 ## Features 
