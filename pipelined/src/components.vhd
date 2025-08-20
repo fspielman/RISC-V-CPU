@@ -128,7 +128,7 @@ package components is
         );
   end component cpu;
 
-  component instruction_fetch_register is
+  component if_id_register is
     port(
           clk: in std_logic;
           stall: in std_logic;
@@ -139,9 +139,9 @@ package components is
           instruction_id: out std_logic_vector(31 downto 0);
           pc_plus4_id: out std_logic_vector(31 downto 0)
         );
-  end component instruction_fetch_register;
+  end component if_id_register;
 
-  component instruction_decode_register is
+  component id_ex_register is
     port(
           clk: in std_logic;
           flush: in std_logic;
@@ -180,9 +180,9 @@ package components is
           alu_src_ex: out std_logic;
           reg_write_ex: out std_logic
         );
-  end component instruction_decode_register;
+  end component id_ex_register;
 
-  component execute_register is
+  component ex_mem_register is
     port(
           clk: in std_logic;
           alu_result: in std_logic_vector(31 downto 0);
@@ -203,10 +203,10 @@ package components is
           mem_write_mem: out std_logic;
           reg_write_mem: out std_logic
         );
-  end component execute_register;
+  end component ex_mem_register;
 
 
-  component write_back_register is
+  component mem_wb_register is
     port(
           clk: in std_logic;
           alu_result: in std_logic_vector(31 downto 0);
@@ -226,7 +226,7 @@ package components is
           result_src_wb: out std_logic_vector(1 downto 0);
           reg_write_wb: out std_logic
         );
-  end component write_back_register;
+  end component mem_wb_register;
 
   component hazard_unit is
     port (

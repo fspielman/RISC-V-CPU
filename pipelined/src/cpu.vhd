@@ -98,7 +98,7 @@ begin
 	  instruction
   );
 	
-	if_reg: instruction_fetch_register port map(
+	if_id_reg: if_id_register port map(
 		clk,
 		stall_if,
 		flush_if,
@@ -147,7 +147,7 @@ begin
 		imm_ext
 	);
 	
-	id_register: instruction_decode_register port map(
+	id_ex_reg: id_ex_register port map(
 		clk,
 		flush_id,
 		read_data1,
@@ -193,7 +193,7 @@ begin
 		zero
 	);
 
-	ex_reg: execute_register port map(
+	ex_mem_reg: ex_mem_register port map(
 		clk,
 		alu_result_ex,
 		read_data2_ex,
@@ -219,7 +219,7 @@ begin
 		read_data_mem
 	);
 
-  wb_reg: write_back_register port map(
+  mem_wb_reg: mem_wb_register port map(
 	  clk,
 	  alu_result_mem,
 	  read_data_mem,

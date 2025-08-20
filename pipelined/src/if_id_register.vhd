@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use work.components.all;
 
-entity instruction_fetch_register is
+entity if_id_register is
   port(
     clk: in std_logic;
 	 stall: in std_logic;
@@ -13,9 +13,9 @@ entity instruction_fetch_register is
     instruction_id: out std_logic_vector(31 downto 0);
     pc_plus4_id: out std_logic_vector(31 downto 0)
   );
-end entity instruction_fetch_register;
+end entity if_id_register;
 
-architecture if_arch of instruction_fetch_register is
+architecture if_id_arch of if_id_register is
   
 begin
   process(clk)
@@ -31,4 +31,4 @@ begin
 		end if; 
   end process;
 
-end architecture if_arch;
+end architecture if_id_arch;
