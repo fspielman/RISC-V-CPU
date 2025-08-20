@@ -17,17 +17,17 @@ entity hazard_unit is
     
    forward_1: out std_logic_vector(1 downto 0);
    forward_2: out std_logic_vector(1 downto 0);
-	 stall_if: out std_logic;
-	 flush_if: out std_logic;
-	 flush_id: out std_logic;
+	 stall_if_id: out std_logic;
+	 flush_if_id: out std_logic;
+	 flush_id_ex: out std_logic;
 	 stall_pc: out std_logic
   );
 end entity hazard_unit;
 
 architecture hazard_unit_arch of hazard_unit is
   
-	signal flush_id_stall: std_logic;
-	signal flush_id_control: std_logic;
+	signal flush_id_ex_stall: std_logic;
+	signal flush_id_ex_control: std_logic;
 	
 begin
   
@@ -66,12 +66,12 @@ begin
 	begin
 		if((source1_id = dest_ex or source2_id = dest_ex) and result_src_ex = "01") then
 			stall_pc <= '1';
-			stall_if <= '1';
-			flush_id_stall <= '1';
+			stall_if_id <= '1';
+			flush_id_ex_stall <= '1';
 		else
 			stall_pc <= '0';
-			stall_if <= '0';
-			flush_id_stall <= '0';		
+			stall_if_id <= '0';
+			flush_id_ex_stall <= '0';		
 		end if;
 	end process;
 	
@@ -79,14 +79,14 @@ begin
 	process(pc_src_ex)
 	begin
 		if pc_src_ex = '1' then
-			flush_if <= '1';
-			flush_id_control <= '1';
+			flush_if_id <= '1';
+			flush_id_ex_control <= '1';
 		else
-			flush_if <= '0';
-			flush_id_control <= '0';
+			flush_if_id <= '0';
+			flush_id_ex_control <= '0';
 		end if;
 	end process;
 	
-	flush_id <= flush_id_stall or flush_id_control;
+	flush_id_ex <= flush_id_ex_stall or flush_id_ex_control;
 
 end architecture hazard_unit_arch;
