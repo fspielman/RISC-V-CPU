@@ -5,8 +5,8 @@ use work.components.all;
 entity instruction_fetch_register is
   port(
     clk: in std_logic;
-		stall: in std_logic;
-		flush: in std_logic;
+	 stall: in std_logic;
+	 flush: in std_logic;
     instruction: in std_logic_vector(31 downto 0);
     pc_plus4: in std_logic_vector(31 downto 0);
 

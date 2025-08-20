@@ -35,8 +35,8 @@ architecture cpu_arch of cpu is
 
   signal imm_ext: std_logic_vector(31 downto 0);
   signal sel_sourceB: std_logic_vector(31 downto 0);
-	signal alu_sourceA: std_logic_vector(31 downto 0);
-	signal alu_sourceB: std_logic_vector(31 downto 0);
+  signal alu_sourceA: std_logic_vector(31 downto 0);
+  signal alu_sourceB: std_logic_vector(31 downto 0);
 	
   signal read_data_mem: std_logic_vector(31 downto 0);
   signal write_back: std_logic_vector(31 downto 0);
@@ -48,48 +48,48 @@ architecture cpu_arch of cpu is
   signal pc_plus4: std_logic_vector(31 downto 0);
 	
 	-- pipelined signals
-	signal instruction_id: std_logic_vector(31 downto 0);
+  signal instruction_id: std_logic_vector(31 downto 0);
   signal pc_plus4_id: std_logic_vector(31 downto 0);
 	
-	signal read_data1_ex: std_logic_vector(31 downto 0);
+  signal read_data1_ex: std_logic_vector(31 downto 0);
   signal read_data2_ex: std_logic_vector(31 downto 0);
   signal pc_ex: std_logic_vector(31 downto 0);
   signal imm_ext_ex: std_logic_vector(31 downto 0);
   signal pc_plus4_ex: std_logic_vector(31 downto 0);
-	signal source1_ex: std_logic_vector(4 downto 0);
-	signal source2_ex: std_logic_vector(4 downto 0);
-	signal dest_ex: std_logic_vector(4 downto 0);
+  signal source1_ex: std_logic_vector(4 downto 0);
+  signal source2_ex: std_logic_vector(4 downto 0);
+  signal dest_ex: std_logic_vector(4 downto 0);
   signal branch_ex: std_logic;
   signal jump_ex: std_logic;
   signal result_src_ex: std_logic_vector(1 downto 0);
   signal mem_write_ex: std_logic;
   signal alu_ctrl_ex: std_logic_vector(3 downto 0);
-	signal alu_src_ex: std_logic;
+  signal alu_src_ex: std_logic;
   signal reg_write_ex: std_logic;
-	signal alu_result_ex: std_logic_vector(31 downto 0); 
+  signal alu_result_ex: std_logic_vector(31 downto 0); 
 	    
   signal alu_result_mem: std_logic_vector(31 downto 0);
   signal write_data_mem: std_logic_vector(31 downto 0);
   signal pc_plus4_mem: std_logic_vector(31 downto 0);
-	signal dest_mem: std_logic_vector(4 downto 0);
-	signal result_src_mem: std_logic_vector(1 downto 0);
+  signal dest_mem: std_logic_vector(4 downto 0);
+  signal result_src_mem: std_logic_vector(1 downto 0);
   signal mem_write_mem: std_logic;
   signal reg_write_mem: std_logic;
 	
-	signal alu_result_wb: std_logic_vector(31 downto 0);
+  signal alu_result_wb: std_logic_vector(31 downto 0);
   signal read_data_mem_wb: std_logic_vector(31 downto 0);
   signal pc_plus4_wb: std_logic_vector(31 downto 0);	 
-	signal dest_wb: std_logic_vector(4 downto 0);
-	signal result_src_wb: std_logic_vector(1 downto 0);
-	signal reg_write_wb: std_logic;
+  signal dest_wb: std_logic_vector(4 downto 0);
+  signal result_src_wb: std_logic_vector(1 downto 0);
+  signal reg_write_wb: std_logic;
 	
-	-- hazard unit
-	signal forward_1: std_logic_vector(1 downto 0);
-	signal forward_2: std_logic_vector(1 downto 0);
-	signal stall_if: std_logic;
-	signal flush_if: std_logic;
-	signal flush_id: std_logic;
-	signal stall_pc: std_logic;
+  -- hazard unit
+  signal forward_1: std_logic_vector(1 downto 0);
+  signal forward_2: std_logic_vector(1 downto 0);
+  signal stall_if: std_logic;
+  signal flush_if: std_logic;
+  signal flush_id: std_logic;
+  signal stall_pc: std_logic;
 		
 begin
 
@@ -150,37 +150,37 @@ begin
 	id_register: instruction_decode_register port map(
 		clk,
 		flush_id,
-    read_data1,
-    read_data2,
-    pc,
-    imm_ext,
-    pc_plus4_id,
+		read_data1,
+		read_data2,
+		pc,
+		imm_ext,
+		pc_plus4_id,
 		source1,
 		source2,
 		dest,
-    branch,
-    jump,
-    result_src,
-    mem_write,
-    alu_ctrl,
-    alu_src,
-    imm_src,
-    reg_write,
-    read_data1_ex,
-    read_data2_ex,
-    pc_ex,
-    imm_ext_ex,
-    pc_plus4_ex,
+		branch,
+		jump,
+		result_src,
+		mem_write,
+		alu_ctrl,
+		alu_src,
+		imm_src,
+		reg_write,
+		read_data1_ex,
+		read_data2_ex,
+		pc_ex,
+		imm_ext_ex,
+		pc_plus4_ex,
 		source1_ex,
 		source2_ex,
 		dest_ex,
-    branch_ex,
-    jump_ex,
-    result_src_ex,
-    mem_write_ex,
-    alu_ctrl_ex,
-    alu_src_ex,
-    reg_write_ex
+		branch_ex,
+		jump_ex,
+		result_src_ex,
+		mem_write_ex,
+		alu_ctrl_ex,
+		alu_src_ex,
+		reg_write_ex
 	);
 	
 	sel_sourceB <= alu_sourceB when alu_src_ex = '0' else imm_ext_ex;
@@ -194,22 +194,22 @@ begin
 	);
 
 	ex_reg: execute_register port map(
-    clk,
-    alu_result_ex,
-    read_data2_ex,
-    pc_plus4_ex,
+		clk,
+		alu_result_ex,
+		read_data2_ex,
+		pc_plus4_ex,
 		dest_ex,
-    result_src_ex,
-    mem_write_ex,
-    reg_write_ex,
-    alu_result_mem,
-    write_data_mem,
-    pc_plus4_mem,
+		result_src_ex,
+		mem_write_ex,
+		reg_write_ex,
+		alu_result_mem,
+		write_data_mem,
+		pc_plus4_mem,
 		dest_mem,
 		result_src_mem,
-    mem_write_mem,
-    reg_write_mem
-  );
+		mem_write_mem,
+		reg_write_mem
+   );
 	
 	data_mem: data_memory port map(
 		clk,
@@ -219,21 +219,21 @@ begin
 		read_data_mem
 	);
 
-	wb_reg: write_back_register port map(
-    clk,
-    alu_result_mem,
-    read_data_mem,
-    pc_plus4_mem,
-		dest_mem,
-		result_src_mem,
-    mem_write_mem,
-    reg_write_mem,
-    alu_result_wb,
-    read_data_mem_wb,
-    pc_plus4_wb,
-		dest_wb,
-		result_src_wb,
-		reg_write_wb
+  wb_reg: write_back_register port map(
+	  clk,
+	  alu_result_mem,
+	  read_data_mem,
+	  pc_plus4_mem,
+	  dest_mem,
+	  result_src_mem,
+	  mem_write_mem,
+	  reg_write_mem,
+	  alu_result_wb,
+	  read_data_mem_wb,
+	  pc_plus4_wb,
+	  dest_wb,
+	  result_src_wb,
+	  reg_write_wb
   );
 	
 	write_back_mux: mux3to1  port map(

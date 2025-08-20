@@ -5,7 +5,7 @@ use work.components.all;
 entity control_unit is
   port(
 		opcode: in std_logic_vector(6 downto 0);
-    funct3: in  std_logic_vector(2 downto 0);
+      funct3: in  std_logic_vector(2 downto 0);
 		funct7: in  std_logic_vector(6 downto 0);
 
 		branch: out std_logic;

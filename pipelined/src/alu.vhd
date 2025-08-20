@@ -4,13 +4,13 @@ use ieee.numeric_std.all;
 
 entity alu is
   port(
-		sourceA: in std_logic_vector(31 downto 0);
+	 sourceA: in std_logic_vector(31 downto 0);
     sourceB: in std_logic_vector(31 downto 0);
-		alu_ctrl: in std_logic_vector(3 downto 0);
+	 alu_ctrl: in std_logic_vector(3 downto 0);
 		
-		alu_result: out std_logic_vector(31 downto 0);
-		zero: out std_logic
-	);
+	 alu_result: out std_logic_vector(31 downto 0);
+	 zero: out std_logic
+  );
 end entity alu;
 
 architecture alu_arch of alu is
