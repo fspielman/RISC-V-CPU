@@ -15,7 +15,7 @@ Extension to the **[`Single-Cycle CPU`](../single_cycle/)**
 - src/ -- contains entities
 - tb/ -- contains testbenches
 
-## Top-Level Entity (src/cpu.vhd)
+## Top-Level Entity ([`cpu.vhd`](src/cpu.vhd))
 ### Datapath Blocks 
 - Pipeline registers: registers to store signals from stages
   - if_id_register
