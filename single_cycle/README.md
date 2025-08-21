@@ -4,7 +4,7 @@
 - src/ -- contains entities
 - tb/ -- contains test benches
 
-## Top-Level Entity (src/cpu.vhd)
+## Top-Level Entity ([`cpu.vhd`](src/cpu.vhd))
 ### Datapath Blocks
 - instruction_mem: fetches 32-bit instruction at pc
 - register_file: 32 registers, 2 read + 1 write ports
