@@ -28,3 +28,42 @@
 - **Jump (J-type):** JAL
 - **Branch (B-type):** BEQ  
 
+## Verification
+### Register Initializations (located in [`Register File`](src/register_file.vhd))
+- x4 = 2
+- x5 = 3
+- x6 = 4
+- x7 = 5
+- x18 = 6
+- x19 = 7
+- x20 = 8
+
+### RAM Initializations (located in [`Data Memory`](src/data_memory.vhd))
+- RAM[1] = 13
+- The rest are set to 0
+
+### Instructions (located in [`Instruction Memory`](src/instruction_mem.vhd))
+| PC  | Instruction        | Explanation |
+|-----|--------------------|-------------|
+| [0]  | `addi x0, x0, 0`  | nop |
+| [4]  | `or   x4, x5, x6` | x4 = 3 \| 4 = 7 |
+| [8]  | `add  x18, x19, x20` | x18 = 7 + 8 = 15 |
+| [12] | `sub  x5, x6, x7` | x5 = 4 - 5 = -1 |
+| [16] | `addi x4, x5, 23` | x4 = -1 + 23 = 22 |
+| [20] | `andi x0, x0, 0`  | x0 remains 0 |
+| [24] | `lw   x5, 0(x7)`  | load from data memory → x7=5 → addr 5/4=1 (word aligned) → RAM[1]=13 → x5 = 13 |
+| [28] | `sw   x4, 4(x7)`  | store x4 = 22 → addr (5+4)/4=2 (word aligned) → ram[2] = 22 |
+| [32] | `beq  x7, x4, 4`  | not taken (x7 ≠ x4) |
+| [36] | `jal  x1, -20`    | x1 = 40 → jump back 5 instructions to [16] |
+| [16] | `addi x4, x5, 23` | second time: x5 = 13 → x4 = 13 + 23 = 36 |
+
+After the jump, the sequence repeats. The second execution of instruction [16] updates x4 = 36 and the following sw stores that value into RAM[2].
+
+### ModelSim Waveform
+![ModelSim Waveform](waveform.png)
+
+### Signals in Waveform
+- CLK
+- PC
+- Registers
+- RAM
