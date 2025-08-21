@@ -86,9 +86,9 @@ architecture cpu_arch of cpu is
   -- hazard unit
   signal forward_1: std_logic_vector(1 downto 0);
   signal forward_2: std_logic_vector(1 downto 0);
-  signal stall_if: std_logic;
-  signal flush_if: std_logic;
-  signal flush_id: std_logic;
+  signal stall_if_id: std_logic;
+  signal flush_if_id: std_logic;
+  signal flush_id_ex: std_logic;
   signal stall_pc: std_logic;
 		
 begin
@@ -100,8 +100,8 @@ begin
 	
 	if_id_reg: if_id_register port map(
 		clk,
-		stall_if,
-		flush_if,
+		stall_if_id,
+		flush_if_id,
 		instruction,
 		pc_plus4,
 		instruction_id,
@@ -149,7 +149,7 @@ begin
 	
 	id_ex_reg: id_ex_register port map(
 		clk,
-		flush_id,
+		flush_id_ex,
 		read_data1,
 		read_data2,
 		pc,
@@ -274,9 +274,9 @@ begin
 			
 		forward_1,
 		forward_2,
-		stall_if,
-		flush_if,
-		flush_id,
+		stall_if_id,
+		flush_if_id,
+		flush_id_ex,
 		stall_pc
 	);
 	
