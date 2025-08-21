@@ -71,12 +71,12 @@ Extension to the **[`Single-Cycle CPU`](../single_cycle/)**
 |------|--------------------------|-------------|
 | [0]  | `addi x0, x0, 0`         | nop |
 | [4]  | `lw   x5, 0(x7)`         | x7 = 5 → byte address 5 → index: 5/4 = 1 (word aligned) → RAM[1] = 13 → x5 = 13 |
-| [8]  | `add  x4, x5, x6`        | x4 = 13 + 4 = 17  **load-use stall** |
-| [12] | `add  x7, x4, x8`        | x7 = 17 + 10 = 27 **forwarding** |
-| [16] | `add  x3, x4, x5`        | x3 = 17 + 13 = 30 **forwarding** |
+| [8]  | `add  x4, x5, x6`        | x4 = 13 + 4 = 17 → **load-use stall** |
+| [12] | `add  x7, x4, x8`        | x7 = 17 + 10 = 27 → **forwarding** |
+| [16] | `add  x3, x4, x5`        | x3 = 17 + 13 = 30 → **forwarding** |
 | [20] | `add  x16, x17, x18`     | x16 = 12 + 6 = 18 |
-| [24] | `add  x15, x19, x16`     | x15 = 7 + 18 = 25 **forwarding** |
-| [28] | `add  x21, x20, x16`     | x21 = 8 + 18 = 26 **forwarding** |
+| [24] | `add  x15, x19, x16`     | x15 = 7 + 18 = 25 → **forwarding** |
+| [28] | `add  x21, x20, x16`     | x21 = 8 + 18 = 26 → **forwarding** |
 | [32] | `beq  x30, x31, -32`     | x30 = x31 = 15 → **branch taken** → PC goes back to [4] (loop) |
 | [36] | `add  x15, x19, x16`     | Wrong path after branch taken → flushed |
 | [40] | `add  x21, x20, x16`     | Wrong path after branch taken → flushed |
