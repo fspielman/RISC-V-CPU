@@ -11,7 +11,7 @@ entity register_file is
 		dest: in std_logic_vector(4 downto 0);
 		write_data: in std_logic_vector(31 downto 0);
 
-      read_data1: out std_logic_vector(31 downto 0);
+        read_data1: out std_logic_vector(31 downto 0);
 		read_data2: out std_logic_vector(31 downto 0)
 	);
 end entity register_file;
