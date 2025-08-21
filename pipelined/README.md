@@ -45,4 +45,53 @@ Extension to the **[`Single-Cycle CPU`](../single_cycle/)**
 
 ### Control Flow
 - **Jump (J-type):** JAL
-- **Branch (B-type):** BEQ 
+- **Branch (B-type):** BEQ
+
+## Verification
+
+### Register Initializations (located in [`Register File`](src/register_file.vhd))
+- x4  = 2  
+- x6  = 4  
+- x7  = 5  
+- x8  = 10  
+- x17 = 12  
+- x18 = 6  
+- x19 = 7  
+- x20 = 8  
+- x30 = 15  
+- x31 = 15  
+- The rest are set to 0
+
+### RAM Initializations (located in [`Data Memory`](src/data_memory.vhd))
+- RAM[1] = 13  
+- The rest are set to 0
+
+### Instructions (located in [`Instruction Memory`](src/instruction_mem.vhd))
+| PC   | Instruction              | Explanation |
+|------|--------------------------|-------------|
+| [0]  | `addi x0, x0, 0`         | nop |
+| [4]  | `lw   x5, 0(x7)`         | x7 = 5 → byte address 5 → index: 5/4 = 1 (word aligned) → RAM[1] = 13 → x5 = 13 |
+| [8]  | `add  x4, x5, x6`        | x4 = 13 + 4 = 17  **load-use stall** |
+| [12] | `add  x7, x4, x8`        | x7 = 17 + 10 = 27 **forwarding** |
+| [16] | `add  x3, x4, x5`        | x3 = 17 + 13 = 30 **forwarding** |
+| [20] | `add  x16, x17, x18`     | x16 = 12 + 6 = 18 |
+| [24] | `add  x15, x19, x16`     | x15 = 7 + 18 = 25 **forwarding** |
+| [28] | `add  x21, x20, x16`     | x21 = 8 + 18 = 26 **forwarding** |
+| [32] | `beq  x30, x31, -32`     | x30 = x31 = 15 → **branch taken** → PC goes back to [4] (loop) |
+| [36] | `add  x15, x19, x16`     | Wrong path after branch taken → flushed |
+| [40] | `add  x21, x20, x16`     | Wrong path after branch taken → flushed |
+
+After the branch at [32], the PC jumps back to [4] and the sequence repeats.
+
+### ModelSim Waveform
+![ModelSim Waveform](waveform.png)
+
+### Signals in Waveform
+- `clk`
+- `pc`
+- `forward_1` (source 1 forward select), `forward_2` (source 2 forward select)
+- `stall_if_id`, `flush_if_id`, `flush_id_ex`, `stall pc`
+- `Registers`
+
+**Note:** Only the most relevant signals are shown here. For more signals run the simulation on [`cpu_tb.vhd`](tb/cpu_tb.vhd).
+
