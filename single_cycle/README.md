@@ -67,3 +67,5 @@ After the jump, the sequence repeats. The second execution of instruction [16] u
 - PC
 - Registers
 - RAM
+
+**Note:** Only the most relevant signals are shown here. For more signals run the simulation on [`cpu_tb.vhd`](tb/cpu_tb.vhd).
