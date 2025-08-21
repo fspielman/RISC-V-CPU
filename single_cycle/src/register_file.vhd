@@ -20,7 +20,7 @@ architecture reg_file_arch of register_file is
 
   type registers is array(31 downto 0) of std_logic_vector(31 downto 0);
   signal reg : registers := (
-		4 => std_logic_vector(to_unsigned(2, 32)),  -- x4 = 3
+		4 => std_logic_vector(to_unsigned(2, 32)),  -- x4 = 2
 		5 => std_logic_vector(to_unsigned(3, 32)),  -- x5 = 3
 		6 => std_logic_vector(to_unsigned(4, 32)),  -- x6 = 4
 		7 => std_logic_vector(to_unsigned(5, 32)),  -- x7 = 5
