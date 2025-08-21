@@ -17,9 +17,9 @@ architecture data_mem_arch of data_memory is
 
   type memory is array(0 to 31) of std_logic_vector(31 downto 0);
   signal ram: memory := (
-  1 => std_logic_vector(to_unsigned(13,32)),
-  others => (others => '0')
-);
+		1 => std_logic_vector(to_unsigned(13,32)),
+		others => (others => '0')
+	);
 
 begin
   process(clk)
