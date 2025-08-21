@@ -78,8 +78,8 @@ Extension to the **[`Single-Cycle CPU`](../single_cycle/)**
 | [24] | `add  x15, x19, x16`     | x15 = 7 + 18 = 25 → **forwarding** |
 | [28] | `add  x21, x20, x16`     | x21 = 8 + 18 = 26 → **forwarding** |
 | [32] | `beq  x30, x31, -32`     | x30 = x31 = 15 → **branch taken** → PC goes back to [4] (loop) |
-| [36] | `add  x15, x19, x16`     | Wrong path after branch taken → flushed |
-| [40] | `add  x21, x20, x16`     | Wrong path after branch taken → flushed |
+| [36] | `add  x15, x19, x16`     | Wrong path after branch taken → **flushed** |
+| [40] | `add  x21, x20, x16`     | Wrong path after branch taken → **flushed** |
 
 After the branch at [32], the PC jumps back to [4] and the sequence repeats.
 
